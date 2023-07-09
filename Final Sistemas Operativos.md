@@ -273,50 +273,50 @@ cd
 mkdir PRUEBA
 ```
 <!-- El comando cd nos lleva al home del usuario -->
-3) Crear los directorios dir1, dir2 y dir3 en el directorio PRUEBA. 
+2) Crear los directorios dir1, dir2 y dir3 en el directorio PRUEBA. 
 ```
 mkdir /root/PRUEBA/dir{1..3}
 ```
-1) Dentro de dir1 crear el directorio dir11. 
+3) Dentro de dir1 crear el directorio dir11. 
 ```
 mkdir /root/PRUEBA/dir1/dir11
 ```
-3) Dentro del directorio dir3 crear el directorio dir31. 
+4) Dentro del directorio dir3 crear el directorio dir31. 
 ```
 mkdir /root/PRUEBA/dir3/dir31
 ```
-1) Dentro del directorio dir31, crear los directorios dir311 y dir312. 
+5) Dentro del directorio dir31, crear los directorios dir311 y dir312. 
 ```
 mkdir /root/PRUEBA/dir3/dir31/dir31{1,2}
 ```
-1) Copiar el archivo /etc/motd a un archivo llamado mensaje dentro directorio /root/PRUEBA. 
+6) Copiar el archivo /etc/motd a un archivo llamado mensaje dentro directorio /root/PRUEBA. 
 ```
 cp /etc/motd /root/PRUEBA/
 mv motd mensaje
 ```
-1) Copiar "mensaje" dentro de los directorios dir1, dir2 y dir3 (recuerde la estructura generada en los puntos 2,3,4 y 5). 
+7) Copiar "mensaje" dentro de los directorios dir1, dir2 y dir3 (recuerde la estructura generada en los puntos 2,3,4 y 5). 
 ```
 cp mensaje dir1
 cp mensaje dir2
 cp mensaje dir3
 ```
-1) Comprobar el ejercicio anterior, usando solamente un comando. 
+8) Comprobar el ejercicio anterior, usando solamente un comando. 
 ```
 tree
 ```
-3) Copiar el contenido del directorio /etc/rc.d dentro del directorio dir31 (recuerde la estructura generada en los puntos 2,3,4 y 5). 
+9) Copiar el contenido del directorio /etc/rc.d dentro del directorio dir31 (recuerde la estructura generada en los puntos 2,3,4 y 5). 
 ```
 cp -r /etc/rc.d dir3/dir31/
 ```
-1) Copiar en el directorio dir311 los archivos de /bin que comiencen con la letra “a”. 
+10) Copiar en el directorio dir311 los archivos de /bin que comiencen con la letra “a”. 
 ```
 cp /bin/a* dir3/dir31/
 ```
-1) Mover el directorio dir31 y sus subdirectorios debajo de dir2. 
+11) Mover el directorio dir31 y sus subdirectorios debajo de dir2. 
 ```
 mv dir3/dir31/* dir2/
 ```
-1) Borrar los archivos y directorios de dir1, incluido el propio directorio.
+12) Borrar los archivos y directorios de dir1, incluido el propio directorio.
 ```
 rm -rf dir1
 ```
