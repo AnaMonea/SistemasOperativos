@@ -1199,7 +1199,7 @@ PrivateTmp=true
 WantedBy=multi-user.target
 ```
 ---
-Podemos destacar que se encuentran divididos en secciones, estas secciones son:
+Se encuentran divididos en secciones;
 
 >\->**\[Unit]**: donde describe el servicio en sí, documentación, descripción, etc. 
 >\->**\[Service]**: donde están las acciones para iniciar, detener el servicio. 
@@ -1207,3 +1207,44 @@ Podemos destacar que se encuentran divididos en secciones, estas secciones son:
 >>     **ExecStop**: comando para detener el servicio. 
 >\->**\[Install]**: define en qué target podrá ser ejecutado el servicio.
 
+---
+Systemd proporciona una herramienta de línea de comandos para el control de los servicios:
+
+Iniciar un servicio
+```
+systemctl start <servicio>
+```
+Detener un servicio
+```
+systemctl stop
+```
+Saber el estado de un servicio
+```
+systemctl status <servicio>
+```
+Iniciar un servicio junto con el inicio del sistema operativo
+```
+systemctl enable <servicio>
+```
+Deshabilitar el inicio de un servicio junto a el inicio del sistema operativo
+```
+systemctl disable <servicio>
+```
+Si un servicio esta habilitado junto al inicio del sistema operativo
+```
+systemctl is-enabled <servicio>
+```
+
+## Ejercicios 
+
+Responda el cuestionario: 
+1. Generalmente, en que ruta se encuentran los archivos de los servicios de systemd? 
+```
+/usr/lib/systemd/system
+``` 
+2. ¿Cuál es el comando para reiniciar un servicio? 
+3. ¿Cuál es el comando para detener un servicio? 
+4. ¿Cómo se si un servicio esta habilitado su arranque junto al inicio del sistema operativo? 
+5. Busque un servicio existente en el sistema y determine cuál es el comando para iniciarlo.
+
+##
