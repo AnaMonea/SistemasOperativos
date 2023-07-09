@@ -857,13 +857,13 @@ Luego de utilizar vi en el archivo y presionar i, se debe utilizar el comando:
 
 # Segundo Examen
 
-##
+## Introducción
 
-
+Linux se define como un sistema operativo multiusuario y multiproceso. Puede haber más de un usuario utilizándolo al mismo tiempo, y pueden haber más de un proceso activo al mismo momento. Aprender a como interactuar con los procesos es clave para la gestión de Linux.
 
 ## Desarrollo
 
-### Que es un proceso?
+### ¿Que es un proceso?
 
 Es una serie de instrucciones que se ejecutan debido a un programa. Puede ser ejecutado por un usuario o por el mismo sistema operativo, en el segundo caso, ese proceso puede ser resultado de otro proceso. Cada proceso es sometido a un análisis de su prioridad, eso ayuda a dar orden a la cadena de ejecución que tiene el procesador
 
@@ -1247,4 +1247,164 @@ Responda el cuestionario:
 4. ¿Cómo se si un servicio esta habilitado su arranque junto al inicio del sistema operativo? 
 5. Busque un servicio existente en el sistema y determine cuál es el comando para iniciarlo.
 
-##
+## Linux y la seguridad
+
+Al ser un sistema operativo de código abierto, contamos con la ventaja de que mucha gente tiene acceso a él para saber las vulnerabilidades e informar a los desarrolladores de las mismas de éstas. Pero también es una gran desventaja, porque mucha otra gente puede explotar esas vulnerabilidades y no informarlas
+Ningún sistema es 100 % seguro, debemos tener presente que podemos ser atacados en cualquier momento
+
+### Múltiples capas
+
+El concepto de seguridad en múltiples capas se desprende de la idea de que todo sistema de seguridad no es 100% fiable, por eso al poner más de una capa de seguridad, si falla alguna, habrá una capa más brindando seguridad extra, para hacer más difícil la tarea al posible atacante. Para obtener mejores resultados, es indispensable conocer tanto la infraestructura como la arquitectura de la aplicación o servicios funcionando en nuestro sistema.
+
+![[Pasted image 20230709124017.png]]
+
+### Herramientas Básicas
+
+Linux posee una serie de implementaciones a nivel seguridad que nos ayudan a controlar gran parte del comportamiento de las aplicaciones que corren en é
+
+#### ACLs 
+De su sigla en inglés, Access control list es una herramienta que extiende los permisos POSIX (tradicionales) en Linux.
+
+#### Atributos de archivos y directorios
+
+Al igual que las ACLs, los atributos de archivos y directorios extienden enormemente el sistema de permisos tradicionales sobre directorios y archivos en Linux.
+
+#### Firewall
+
+Un firewall trabaja en la capa de red del servidor, se encarga de decidir mediante reglas, el comportamiento de los paquetes que entran, salen o transitan el servidor. 
+
+### Herramientas Complejas
+
+Existen otros tipos de sistemas de seguridad extra a los de Linux en general, son los que implementan las diferentes distribuciones o familias de distribuciones para sus sistemas
+
+#### SELinux
+
+SELinux (Security Enhanced Linux) es un framework de seguridad realizado por Red Hat y es el implementado en esta familia de distribuciones. Su funcionamiento está basado en MAC (Mandatory Access Control) que proporciona una etiqueta de seguridad especial a cada recurso y proceso del sistema llamado SELinux Context, en base a ellas se generan políticas. La política de SELinux utiliza estos contextos en una serie de reglas que definen cómo los procesos pueden interactuar entre sí y con los distintos recursos del sistema. Por defecto, la política no permite ninguna interacción a menos que una regla conceda explícitamente el acceso.
+
+##### Modos de operación;
+<mark style="background: #FF5582A6;">Enforcing</mark> 
+Aplica las reglas y registra los intentos de violación de las mismas
+
+<mark style="background: #BBFABBA6;">Permissive</mark> 
+Registra los intentos que hubieran sido bloqueados pero no los niega
+
+<mark style="background: #CACFD9A6;">Disabled</mark> 
+Completamente deshabilitado
+
+##### Ventajas 
+● Todos los procesos y recursos están etiquetados, por lo tanto solo podremos permitir un acceso si existe una regla específica para ello. 
+● Control de acceso detallado. 
+● La política de SELinux se define administrativamente y se aplica en todo el sistema. 
+● Mejora de la mitigación de los ataques de escalada de privilegios. 
+● SELinux puede utilizarse para reforzar la confidencialidad e integridad de los datos, así como para proteger los procesos de las entradas no fiables
+
+##### Lo que NO es SELinux
+● SELinux no es un software antivirus. 
+● Reemplazo de contraseñas, cortafuegos y otros sistemas de seguridad 
+● Solución de seguridad todo en uno
+
+#### AppArmor
+
+Es un sistema de seguridad adicional implementado por Debian y las distribuciones que derivan de él, aunque al trabajar junto al kernel puede operar en cualquier Linux. Esta solución está basada en MAC (Mandatory Access Control) al igual que SELinux. Su funcionamiento básico es preguntar en cada llamada al sistema si un proceso está habilitado para la acción que quiere realizar, como por ejemplo el acceso a determinado recurso, mediante la aplicación de políticas podemos habilitar esos accesos. Al contrario de SELinux la aplicación de una regla no se realiza a un usuario determinado, esa regla aplicada es válida para todos los usuarios del sistema que ejecutan el mismo programa
+Los perfiles de AppArmor se guardan en /etc/apparmor.d/ y contienen una lista de reglas de control de acceso sobre los recursos que puede utilizar cada programa. Los perfiles se compilan y son cargados en el kernel por la orden apparmor_parser. Cada perfil se puede cargar bien en modo estricto (enforcing) o bien en modo relajado (complaining). El modo estricto aplica las reglas y registra las tentativas de violación, mientras que en el modo relajado sólo se registran las llamadas al sistema que hubieran sido bloqueadas, pero no se bloquean realmente.
+
+## Permisos en archivos y directorios
+
+El sistema estándar de permisos sobre archivos y directorios de Linux está basado en DAC (Discretionary Access Control), cada archivo y directorio del sistema tiene un juego de permisos basados en usuarios y grupos para gestionar su acceso.
+
+### Usuarios y grupos
+
+En Linux, un usuario es una entidad que accede al sistema y tiene determinados privilegios. Cada usuario posee un nombre particular y se le asocia un ID numérico, conocido como UID (User ID). Un grupo es un contenedor de diferentes usuarios, al igual que a estos se les asigna un nombre particular y un ID, conocido como GID (Group ID).
+
+Cada archivo y directorio tendrá asignado un usuario y un grupo propietario (Owner). Esta es una de las bases de aplicación de permisos.
+
+### Permisos
+
+#### Tipos de permisos en Linux
+
+<mark style="background: #BBFABBA6;">Lectura</mark>
+El archivo o directorio tendrá permisos de visualización solamente, podremos leerlo o visualizarlo, pero no modificarlo. Se referencia con la letra “r” (read). 
+
+<mark style="background: #BBFABBA6;">Escritura</mark>
+El archivo o directorio tendrá permisos de escritura, lo que nos permite modificarlo, incluso eliminarlo. Se referencia con una letra “w” (write). 
+
+<mark style="background: #BBFABBA6;">Ejecución</mark>
+El archivo o directorio puede ser ejecutado, en el caso de un binario este permiso es el que posibilita su ejecución, en el caso de un directorio es el que permite su ingreso al mismo. Se referencia con la letra “x” (execution).
+
+Estos permisos se repiten 3 veces por cada archivo y directorio, de la siguiente manera:
+
+   7           7            7                 Base octal         
+ 111       111         111             Base binaria        
+ rwx       rwx          rwx            Permisos Linux       
+ <mark style="background: #CACFD9A6;">1</mark>         <mark style="background: #FFF3A3A6;">2</mark>           <mark style="background: #FFB86CA6;">3</mark>           Nro. de columna        
+
+
+##### <mark style="background: #CACFD9A6;">Permisos de Otros</mark>  (1ra columna)
+Corresponden a los aplicados usuarios que no sean el owner del archivo o no estén en el grupo owner
+
+##### <mark style="background: #FFF3A3A6;">Permisos de Grupo</mark>  (2da columna)
+Corresponden a los aplicados usuarios que están en el grupo owner del archivo
+
+##### <mark style="background: #FFB86CA6;">Permisos de Owner</mark>  (3er columna)
+Corresponden a los aplicados al usuario owner del archivo directorio
+
+---
+### Herramientas de permisos
+
+Destacan dos herramientas principales para interactuar con el sistema de permisos en archivos y directorios en Linux.
+
+#### Chown
+
+Permite cambiar el usuario y grupo dueño de un archivo o directorio (owner)
+```
+chown <usuario>:<grupo> <archivo>
+```
+
+Opciones 
+-R: recursivo, se aplica para directorios y su contenido.
+
+<mark style="background: #ABF7F7A6;">Ej.</mark>Cambiamos el owner del archivo “archivo” al usuario “permisos
+```
+[root@centos1 permisos]# chown permisos:root archivo
+[root@centos1 permisos]# ls -l archivo
+-rw-r--r--. 1 permisos root 0 Jun 20 15:48 archivo
+```
+
+#### Chmod
+Permite cambiar los permisos de archivos y directorios, puede funcionar poniendo los permisos en notación numérica (en base octal) o usando letras.
+```
+chmod <permisos> <archivo>
+```
+
+Opciones 
+-r: recursivo, aplica permisos a directorios y su contenido
+
+<mark style="background: #ABF7F7A6;">Ej.</mark> Cambiamos los permisos para que solamente el usuario dueño del archivo pueda leerlo
+```
+[root@centos1 permisos]# chmod 400 archivo 
+[root@centos1 permisos]# ls -l archivo 
+-r--------. 1 permisos root 0 Jun 20 15:48 archivo
+```
+
+También se puede ejecutar el comando chmod con un modo POSIX
+<mark style="background: #ABF7F7A6;">Ej.</mark> Otorgamos permisos de escritura al usuario dueño del archivo
+```
+[root@centos1 permisos]# chmod u+w archivo 
+[root@centos1 permisos]# ls -l archivo 
+-rw-------. 1 permisos root 0 Jun 20 15:48 archivo
+```
+
+## Ejercicios 
+
+1. Escribir los comandos necesarios para dejar los archivos con los siguientes permisos, tanto en sistema octal como en POSIX.
+
+|   |   |
+|---|---|
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
